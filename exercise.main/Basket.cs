@@ -19,15 +19,23 @@ namespace exercise.main
 
         public bool AddItem(Product product)
         {
-            if (Products.Count >= Capacity) return false;
+            if (Products.Count >= Capacity)
+            {
+                return false;
+            }
+
             Products.Add(product);
             return true;
         }
 
         public bool RemoveItem(Product product)
         {      
-            var selectedItem =  Products.FirstOrDefault(product => product.Id == product.Id);
-            if (selectedItem == null) return false;
+            var selectedItem =  Products.FirstOrDefault(p => p.Id == product.Id);
+            if (selectedItem == null)
+            {
+                return false;
+            }
+
             Products.Remove(selectedItem);
             return true;
         }

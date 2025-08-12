@@ -41,6 +41,7 @@ namespace exercise.main
             Variant = variant;
             Price = price;
             SKU = CreateSKU();
+            Id = Guid.NewGuid();
         }
 
         private string CreateSKU()

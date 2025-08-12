@@ -1,4 +1,5 @@
-﻿using System;
+﻿using exercise.main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -12,65 +13,67 @@ namespace exercise.tests
         [Test]
         public void AddBagelToBasketHasCorrectBagel()
         {
-            var basket = new Basket();
-            var bagel = new Bagel("Sesame");
+            var basket = new Basket(5);
+            var bagel = Inventory.CreateBagel(BagelVariant.Sesame);
 
-            basket.AddBagel(bagel);
+            var added = basket.AddItem(bagel);
 
-            Assert.Contains(bagel, basket.Items);
+            Assert.IsTrue(added);
+            Assert.Contains(bagel, basket.Products);
         }
 
         [Test]
         public void RemoveBagelFromBasketNoLongerHasThatBagel()
         {
-            var basket = new Basket();
-            var bagel = new Bagel("Sesame");
+            var basket = new Basket(5);
+            var bagel = Inventory.CreateBagel(BagelVariant.Sesame);
 
-            basket.AddBagel(bagel);
-            Assert.Contains(bagel, basket);
-            basket.RemoveBagel(bagel);
+            var added = basket.AddItem(bagel);
+            var removed = basket.RemoveItem(bagel);
 
-            Assert.DoesNotContain(bagel, basket.Items);
+            Assert.IsTrue(removed);
+            Assert.False(basket.Products.Contains(bagel));
         }
 
         [Test]
         public void AddBagelPastCapacityThrowsError()
         {
-            var basket = new Basket();
-            basket.Capacity = 2;
-            basket.AddBagel(new Bagel("Plain"));
-            basket.AddBagel(new Bagel("Sesame"));
+            var basket = new Basket(2);
 
-            var error = Assert.Throws<InvalidOperationException>(() => basket.AddBagel(new Bagel("Onion")));
+            basket.AddItem(Inventory.CreateBagel(BagelVariant.Plain));
+            basket.AddItem(Inventory.CreateBagel(BagelVariant.Onion));
 
-            Assert.Equal("Basket is at capacity", error.Message);
+            var added = basket.AddItem(Inventory.CreateBagel(BagelVariant.Everything));
+
+            Assert.IsFalse(added);
         }
 
         [Test]
         public void RemoveNonExistantBagelThrowsError()
         {
-            var basket = new Basket();
-            var bagel = new Bagel("Sesame");
+            var basket = new Basket(5);
+            var bagel = Inventory.CreateBagel(BagelVariant.Sesame);
 
-            var ex = Assert.Throws<InvalidOperationException>(() =>
-                basket.RemoveBagel(bagel));
+            var removed = basket.RemoveItem(bagel);
 
-            Assert.Equal("There is no such bagel in the basket", ex.Message);
+            Assert.IsFalse(removed);
         }
 
         [Test]
-        public void ChangeCapacity()
+        public void ChangeCapacityAllowsMoreItems()
         {
-            var basket = new Basket();
-            basket.Capacity = 1;
+            var basket = new Basket(1);
 
-            basket.AddBagel(new Bagel("Plain"));
-            Assert.Throws<InvalidOperationException>(() => basket.AddBagel(new Bagel("Onion")));
+            basket.AddItem(Inventory.CreateBagel(BagelVariant.Plain));
+            var added = basket.AddItem(Inventory.CreateBagel(BagelVariant.Onion));
+            Assert.IsFalse(added);
 
             basket.ChangeCapacity(2);
-            basket.AddBagel(new Bagel("Plain"));
 
-            Assert.Equal(2, basket.Items.Count);
+            added = basket.AddItem(Inventory.CreateCoffee(CoffeeVariant.Black));
+
+            Assert.IsTrue(added);
+            Assert.AreEqual(2, basket.Products.Count);
         }
     }
 }

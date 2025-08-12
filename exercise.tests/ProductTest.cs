@@ -1,4 +1,5 @@
-﻿using System;
+﻿using exercise.main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,30 +11,26 @@ namespace exercise.tests
     {
 
         [Test]
-        public void KnowTheCostOfBagelBeforeAdding()
+        public void KnowTheCostOfBagel()
         {
-            var bagel = new Bagel("Plain");
+            var bagel = Inventory.CreateBagel(BagelVariant.Onion);
 
-            Assert.Equals(1.00, bagel.Price);
+            Assert.AreEqual(0.49f, bagel.Price);
         }
 
         [Test]
-        public void KnowTheCostOfFillingBeforeAdding()
+        public void CanAddDifferentTypesToBasket()
         {
-            var bagel = new Bagel("Plain");
-            var filling = new Filling("Cream Cheese");
+            var basket = new Basket(5);
 
-            bagel.AddFilling(filling);
+            var bagel = Inventory.CreateBagel(BagelVariant.Onion);
+            var filling = Inventory.CreateFilling(FillingVariant.Cheese);
 
-            Assert.Contains(filling, bagel.Fillings);
-        }
+            basket.AddItem(bagel);
+            basket.AddItem(filling);
 
-        [Test]
-        public void AddFillingToBagelAddsRightFillingToBagel()
-        {
-            var filling = new Filling("Bacon");
-
-            Assert.Equals(0.80, filling.Price);
+            Assert.Contains(bagel, basket.Products);
+            Assert.Contains(filling, basket.Products);
         }
     }
 }

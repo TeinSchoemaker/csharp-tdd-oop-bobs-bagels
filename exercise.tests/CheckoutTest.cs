@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+using NUnit.Framework;
+using exercise.main;
 
 namespace exercise.tests
 {
@@ -12,24 +9,26 @@ namespace exercise.tests
         [Test]
         public void GetTotalCostIsSumOfAllPrices()
         {
-            var basket = new Basket();
+            var basket = new Basket(10);
             var checkout = new CheckOut();
-            basket.AddBagel(new Bagel("Plain"));
-            basket.AddBagel(new Bagel("Sesame"));
 
-            var total = checkout.GetTotalCost();
+            basket.AddItem(Inventory.CreateBagel(BagelVariant.Plain));
+            basket.AddItem(Inventory.CreateBagel(BagelVariant.Sesame));
 
-            Assert.Equals(2.20, total);
+            var total = checkout.TotalPrice(basket);
+
+            Assert.AreEqual(0.88f, total);
         }
 
         [Test]
         public void AddBagelNotInInventoryThrowsError()
         {
-            var basket = new Basket();
+            var basket = new Basket(5);
+            var notInInventory = (BagelVariant)20;
 
-            var error = Assert.Throws<InvalidOperationException>(() => basket.AddBagel(new Bagel("Frozen")));
+            var error = Assert.Throws<InvalidOperationException>(() => Inventory.CreateBagel(notInInventory));
 
-            Assert.Equals("Item not in our stock", error.Message);
+            Assert.AreEqual("Bagel not in inventory", error.Message);
         }
     }
 }
