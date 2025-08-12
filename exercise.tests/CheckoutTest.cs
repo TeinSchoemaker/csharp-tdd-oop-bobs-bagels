@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace exercise.tests
 {
-    public class CheckoutTest
+    public class CheckOutTest
     {
         [Test]
         public void GetTotalCostIsSumOfAllPrices()
         {
             var basket = new Basket();
-            var checkout = new Checkout();
+            var checkout = new CheckOut();
             basket.AddBagel(new Bagel("Plain"));
             basket.AddBagel(new Bagel("Sesame"));
 
