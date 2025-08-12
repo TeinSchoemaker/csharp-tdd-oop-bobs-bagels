@@ -15,7 +15,7 @@ namespace exercise.tests
         {
             var bagel = Inventory.CreateBagel(BagelVariant.Onion);
 
-            Assert.AreEqual(0.49f, bagel.Price);
+            Assert.That(bagel.Price, Is.EqualTo(0.49f));
         }
 
         [Test]

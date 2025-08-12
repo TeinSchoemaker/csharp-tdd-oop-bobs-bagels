@@ -73,7 +73,7 @@ namespace exercise.tests
             added = basket.AddItem(Inventory.CreateCoffee(CoffeeVariant.Black));
 
             Assert.IsTrue(added);
-            Assert.AreEqual(2, basket.Products.Count);
+            Assert.That(basket.Products.Count, Is.EqualTo(2));
         }
     }
 }

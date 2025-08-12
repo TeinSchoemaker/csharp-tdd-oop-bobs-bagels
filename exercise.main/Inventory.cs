@@ -12,26 +12,33 @@ namespace exercise.main
         {
             { BagelVariant.Onion, 0.49f },
             { BagelVariant.Plain, 0.39f },
-            { BagelVariant.Everything, 0.59f },
+            { BagelVariant.Everything, 0.49f },
             { BagelVariant.Sesame, 0.49f }
         };
 
         public static Dictionary<CoffeeVariant, float> Coffees = new Dictionary<CoffeeVariant, float>()
         {
             { CoffeeVariant.Black, 0.99f },
-            { CoffeeVariant.White, 1.09f },
+            { CoffeeVariant.White, 1.19f },
             { CoffeeVariant.Cappucino, 1.29f },
-            { CoffeeVariant.Latte, 1.49f }
+            { CoffeeVariant.Latte, 1.29f }
         };
 
         public static Dictionary<FillingVariant, float> Fillings = new Dictionary<FillingVariant, float>()
         {
-            { FillingVariant.Bacon, 0.29f },
+            { FillingVariant.Bacon, 0.12f },
             { FillingVariant.Egg, 0.12f },
-            { FillingVariant.Cheese, 0.15f },
-            { FillingVariant.CreamCheese, 0.25f },
-            { FillingVariant.SmokedSalmon, 0.50f },
-            { FillingVariant.Ham, 0.29f }
+            { FillingVariant.Cheese, 0.12f },
+            { FillingVariant.CreamCheese, 0.12f },
+            { FillingVariant.SmokedSalmon, 0.12f },
+            { FillingVariant.Ham, 0.12f }
+        };
+
+        public static Dictionary<string, Discount> Discounts = new Dictionary<string, Discount>()
+        {
+            { "BGLO", new Discount(6, 2.49f) },
+            { "BGLP", new Discount(12, 3.99f) },
+            { "BGLE", new Discount(6, 2.49f) }
         };
 
         public static Product CreateBagel(BagelVariant variant)

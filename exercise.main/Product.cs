@@ -46,7 +46,14 @@ namespace exercise.main
 
         private string CreateSKU()
         {
-            return $"{Name.ToString().Substring(0, 2)}{Variant.ToString().First()}";
+            string nameCode = Name switch
+            {
+                ProductName.Bagel => "BGL",
+                ProductName.Coffee => "COF",
+                ProductName.Filling => "FIL"
+            };
+
+            return nameCode + Variant.ToString().Substring(0, 1).ToUpper();
         }
 
     }

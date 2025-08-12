@@ -17,7 +17,7 @@ namespace exercise.tests
 
             var total = checkout.TotalPrice(basket);
 
-            Assert.AreEqual(0.88f, total);
+            Assert.That(total, Is.EqualTo(0.88f));
         }
 
         [Test]
@@ -28,7 +28,29 @@ namespace exercise.tests
 
             var error = Assert.Throws<InvalidOperationException>(() => Inventory.CreateBagel(notInInventory));
 
-            Assert.AreEqual("Bagel not in inventory", error.Message);
+            Assert.That(error.Message, Is.EqualTo("Bagel not in inventory"));
+        }
+
+        [Test]
+        public void TotalPriceCalculatedWithSpecialDiscount()
+        {
+            var basket = new Basket(20);
+
+            for (int i = 0; i < 6; i++)
+            {
+                basket.AddItem(Inventory.CreateBagel(BagelVariant.Onion));
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                basket.AddItem(Inventory.CreateBagel(BagelVariant.Plain));
+            }
+
+            var checkout = new CheckOut();
+            var total = checkout.TotalPrice(basket);
+            var receipt = checkout.Receipt(basket);
+
+            Assert.That(total, Is.EqualTo(2.49f + 3.99f));
         }
     }
 }
