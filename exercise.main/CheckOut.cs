@@ -46,7 +46,7 @@ namespace exercise.main
         {
 
             var receipt = new StringBuilder();
-            receipt.AppendLine("~~~ Bob's Bagels ~~~\n");
+            receipt.AppendLine("\n~~~ Bob's Bagels ~~~\n");
             receipt.AppendLine(DateTime.Now.ToString() + "\n");
             receipt.AppendLine("----------------------------\n");
 
